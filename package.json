@@ -1,0 +1,33 @@
+{
+  "name": "reconmander",
+  "version": "1.0.0",
+  "main": "src/main.ts",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "tsc": "tsc",
+    "build-electron": "tsc --project tsconfig.electron.json",
+    "electron": "npm run build-electron && electron ./dist-electron/main.js",
+    "dev": "concurrently \"cd ui && npm run dev\" \"wait-on http://localhost:5173 && npm run electron\"",
+    "dev:react": "cd ui && npm run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "better-sqlite3": "^12.2.0",
+    "concurrently": "^9.2.0",
+    "electron": "^37.1.0",
+    "electron-is-dev": "^3.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "wait-on": "^8.0.3"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/electron": "^1.4.38",
+    "@types/node": "^24.0.8"
+  }
+}
