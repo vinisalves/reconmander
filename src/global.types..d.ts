@@ -1,3 +1,4 @@
+import type { CreateTerminalDto } from "./modules/Terminal/dto/create-terminal.dto";
 import { WorkspaceEntity } from "./modules/Workspace/workspace.entity";
 
 export interface EntityApiInterface<T> {
@@ -10,6 +11,14 @@ export interface EntityApiInterface<T> {
 
 declare global {
   interface Window {
-    workspaceAPI: EntityApiInterface<WorkspaceEntity>;
+    workspaceApi: EntityApiInterface<WorkspaceEntity>;
+    terminalApi: {
+      create: (dto: CreateTerminalDto) => Promise<any>;
+      sendInput: (dto: TerminalInputDto) => void;
+      subscribe: (session: string) => void;
+      removeListener: (
+        callback: (event: any, dto: TerminalInputDto) => void
+      ) => void;
+    };
   }
 }

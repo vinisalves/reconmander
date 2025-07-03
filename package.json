@@ -1,7 +1,7 @@
 {
   "name": "reconmander",
   "version": "1.0.0",
-  "main": "src/main.ts",
+  "main": "dist-electron/main.js",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -19,8 +19,9 @@
   "dependencies": {
     "better-sqlite3": "^12.2.0",
     "concurrently": "^9.2.0",
-    "electron": "^37.1.0",
     "electron-is-dev": "^3.0.1",
+    "knex": "^3.1.0",
+    "node-pty-prebuilt-multiarch": "^0.10.1-pre.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "wait-on": "^8.0.3"
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",
     "@types/electron": "^1.4.38",
-    "@types/node": "^24.0.8"
+    "@types/node": "^24.0.8",
+    "electron": "^37.2.0"
   }
 }

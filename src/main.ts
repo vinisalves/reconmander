@@ -4,6 +4,9 @@ import isDev from "electron-is-dev";
 import { DbManager } from "./modules/Db/database.builder";
 import "./modules/Workspace/workspace.ipc";
 
+import { TerminalService } from "./modules/Terminal/terminal.service";
+import TerminalIpc from "./modules/Terminal/terminal.ipc";
+
 let mainWindow: BrowserWindow;
 
 const db = DbManager.getInstance(
@@ -37,6 +40,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
+  loadServices();
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
@@ -46,3 +50,7 @@ app.whenReady().then(() => {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
+
+const loadServices = () => {
+  new TerminalIpc().register();
+};
