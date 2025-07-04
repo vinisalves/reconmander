@@ -17,11 +17,16 @@ export default class TerminalIpc {
     ipcMain.handle(
       "terminal:create",
       async (_event, dto: CreateTerminalDto) => {
-        return this.terminalService.create(dto);
+        const response = this.terminalService.create(dto);
+        console.log("dddddddddddd", response);
+        return response;
       }
     );
 
     ipcMain.on("terminal:input", (_event, dto: TerminalInputDto) => {
+      return this.terminalService.input(dto);
+    });
+    ipcMain.on("terminal:output", (_event, dto: TerminalInputDto) => {
       return this.terminalService.input(dto);
     });
 

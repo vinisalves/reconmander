@@ -17,6 +17,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@xterm/addon-clipboard": "^0.1.0",
+    "@xterm/addon-web-links": "^0.11.0",
     "better-sqlite3": "^12.2.0",
     "concurrently": "^9.2.0",
     "electron-is-dev": "^3.0.1",

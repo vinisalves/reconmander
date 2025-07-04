@@ -12,12 +12,15 @@ export interface EntityApiInterface<T> {
 declare global {
   interface Window {
     workspaceApi: EntityApiInterface<WorkspaceEntity>;
-    terminalApi: {
+    terminalIpc: {
       create: (dto: CreateTerminalDto) => Promise<any>;
       sendInput: (dto: TerminalInputDto) => void;
       subscribe: (session: string) => void;
       removeListener: (
         callback: (event: any, dto: TerminalInputDto) => void
+      ) => void;
+      onTerminalOutput: (
+        callback: (data: { session: string; output: string }) => void
       ) => void;
     };
   }

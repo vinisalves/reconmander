@@ -11,16 +11,21 @@ contextBridge.exposeInMainWorld("workspaceApi", {
     ipcRenderer.invoke("workspace:create", ws),
 });
 
-contextBridge.exposeInMainWorld("terminalApi", {
-  create: (createTerminalDto: CreateTerminalDto) =>
-    ipcRenderer.invoke("terminal:create", createTerminalDto),
+contextBridge.exposeInMainWorld("terminalIpc", {
+  create: (createTerminalDto: CreateTerminalDto) => {
+    return ipcRenderer.invoke("terminal:create", createTerminalDto);
+  },
 
-  onInput: (callback: (event: any, data: TerminalInputDto) => void) =>
-    ipcRenderer.on("terminal:input", callback),
+  sendInput: (terminalInputDto: TerminalInputDto) => {
+    ipcRenderer.send("terminal:input", terminalInputDto);
+  },
+  onTerminalOutput: (
+    callback: (data: { session: string; output: string }) => void
+  ) => {
+    ipcRenderer.on("terminal:output", (_event, data) => callback(data));
+  },
 
-  sendInput: (terminalInputDto: TerminalInputDto) =>
-    ipcRenderer.send("terminal:input", terminalInputDto),
-
-  subscribe: (session: string) =>
-    ipcRenderer.send("terminal:subscribe", session),
+  subscribe: (session: string) => {
+    ipcRenderer.send("terminal:subscribe", session);
+  },
 });

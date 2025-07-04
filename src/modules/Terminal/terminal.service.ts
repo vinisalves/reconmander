@@ -13,6 +13,7 @@ export class TerminalService {
     try {
       const terminal = this.terminalFactory.create(createTerminalDto);
       const session = this.terminalManager.register(terminal);
+      console.log(session);
       return { session };
     } catch (error) {
       console.error("Failed to create terminal:", error);
@@ -23,6 +24,7 @@ export class TerminalService {
   input(dto: TerminalInputDto): void {
     console.log(dto.input);
     const session = this.terminalManager.getSession(dto.session);
+
     if (!session) throw new Error("Cannot Input - Invalid session");
     if (session?.terminal) {
       session.terminal.write(dto.input);
@@ -37,16 +39,21 @@ export class TerminalService {
   }
 
   subscribe(event: Electron.IpcMainEvent, session: string) {
-    console.log("******************************************* subscribe");
-    const cachedSession = this.terminalManager.getSession(session);
+    console.log(
+      "******************************************* subscribe",
+      session
+    );
+    const currentSession = this.terminalManager.getSession(session);
 
-    if (!cachedSession) throw new Error("Cannot Subscrive - Invalid Session");
-    if (!cachedSession.terminal) throw new Error("Invalid Terminal");
-    if (cachedSession?.terminal) {
+    if (!currentSession) throw new Error("Cannot Subscrive - Invalid Session");
+    if (!currentSession.terminal) throw new Error("Invalid Terminal");
+    if (currentSession?.terminal) {
       console.log("****************************************** subscribed");
-      cachedSession.terminal.onData((data) => {
-        console.log("ondata", data);
-        event.sender.send("terminal:output", { session, output: data });
+      currentSession.terminal.onData((data) => {
+        event.sender.send("terminal:output", {
+          session,
+          output: "\x1b[1;31m" + data,
+        });
       });
     }
   }
